@@ -1,0 +1,20 @@
+.item {
+    padding: 6px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.taskCompleted {
+    border-left: 4px solid green !important;
+}
+
+.taskIncomplete {
+    border-left: 4px solid red !important;
+}
+
+.icon {
+    margin: 0 2px;
+    cursor: pointer;
+}

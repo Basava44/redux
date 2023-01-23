@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import postReducer from "../features/posts/postsSlice";
+import tasksReducer from "../features/tasks/tasksSlice";
+import editTaskReducer from '../features/tasks/editTaskSlice';
 
 export default configureStore({
   reducer: {
-    posts: postReducer,
+    tasks: tasksReducer,
+    editableTask : editTaskReducer
   },
 });
