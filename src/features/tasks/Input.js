@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { nanoid } from "@reduxjs/toolkit";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { add, update } from "./tasksSlice";
+import { addTask as addNewTask } from "./tasksSlice";
 import { clearEdit } from "./editTaskSlice";
 
 const Input = () => {
@@ -17,17 +16,11 @@ const Input = () => {
 
   useEffect(() => {
     setTaskName(task.data.name);
-  },[task]);
+  }, [task]);
 
   const addTask = (task) => {
     if (task) {
-      const newTask = {
-        name: task,
-        completed: false,
-        id: nanoid(),
-      };
-      dispatch(add(newTask));
-      console.log(newTask);
+      dispatch(addNewTask(task));
       setTaskName("");
     }
   };
@@ -37,14 +30,9 @@ const Input = () => {
   };
 
   const updateTask = (name) => {
-    const editedTask = {
-      name: name,
-      completed: false,
-      id: task.data.id,
-    };
-    dispatch(update(editedTask));
+    dispatch(updateTask({ name, completed: false, id: task.data._id }));
     dispatch(clearEdit());
-    setTaskName('')
+    setTaskName("");
   };
 
   return (

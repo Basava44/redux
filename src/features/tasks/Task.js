@@ -8,13 +8,13 @@ import DoneIcon from "@mui/icons-material/Done";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 import { deleteTask as removeTask, completeTask } from "./tasksSlice";
-import { editItem } from "./editTaskSlice";
 
 import styles from "./Task.module.css";
+import { editItem } from "./editTaskSlice";
 
 const Task = () => {
   const tasks = useSelector((state) => {
-    return state.tasks;
+    return state.tasks.tasks;
   });
   const dispatch = useDispatch();
 
@@ -23,8 +23,7 @@ const Task = () => {
   };
 
   const editTask = (task) => {
-    console.log(task);
-    dispatch(editItem(task))
+    dispatch(editItem(task));
   };
 
   const taskCompleted = (task) => {
@@ -39,7 +38,7 @@ const Task = () => {
             className={`${styles.item} ${
               task.completed ? styles.taskCompleted : styles.taskIncomplete
             }`}
-            key={task.id}
+            key={task._id}
           >
             <CardContent sx={{ padding: "4px !important" }}>
               {task.name}
@@ -75,7 +74,7 @@ const Task = () => {
                 fontSize="small"
                 className={styles.icon}
                 onClick={() => {
-                  deleteTask(task);
+                  deleteTask(task._id);
                 }}
               />
             </CardActions>

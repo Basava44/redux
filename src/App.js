@@ -1,7 +1,11 @@
 import Input from "./features/tasks/Input";
 import styles from "./App.module.css";
 import Tasks from "./features/tasks/tasks";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getTasks } from "./features/tasks/tasksSlice";
+
+import LinearProgress from "@mui/material/LinearProgress";
 
 function App() {
   const tasks = useSelector((state) => {
@@ -10,26 +14,34 @@ function App() {
 
   const tasksCompleted = () => {
     let count = 0;
-    for (const i of tasks)
+    for (const i of tasks.tasks)
       if (i.completed) {
         count++;
       }
-
     return count;
   };
+
+  const count = 0;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTasks());
+  }, [count]);
 
   return (
     <div className={styles.mainWrapper}>
       <h2>Task Manager</h2>
       <Input />
-      {tasks.length > 0 ? (
+      {tasks.isLoading ? <LinearProgress style={{ marginTop: 10 }} /> : ""}
+      {tasks.tasks.length > 0 ? (
         <Tasks />
       ) : (
         <div className={styles.warning}>No Tasks Found</div>
       )}
-      {tasks.length > 0 ? (
+      {tasks.tasks.length > 0 ? (
         <div className={styles.alignLeft}>{`${tasksCompleted()}/${
-          tasks.length
+          tasks.tasks.length
         } Tasks Completed`}</div>
       ) : (
         ""
